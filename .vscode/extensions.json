@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "rust-lang.rust-analyzer",
+    "dustypomerleau.rust-syntax",
+    "tamasfe.even-better-toml",
+    "jinxdash.prettier-rust",
+    "esbenp.prettier-vscode"
+  ]
+}
