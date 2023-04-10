@@ -17,12 +17,11 @@ fn get_awnsers(input: &str) -> (i32, i32) {
     (floor, basement)
 }
 
-
 fn main() {
     let input = include_str!("input.txt").trim();
 
     let (floor, basement) = get_awnsers(input);
-    
+
     if basement == 0 {
         println!("Santa never entered the basement");
     } else {
