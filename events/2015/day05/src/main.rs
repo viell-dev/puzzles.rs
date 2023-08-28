@@ -59,3 +59,34 @@ fn main() {
     let new_nice_strings = input.lines().filter(|s| is_new_nice_string(s)).count();
     println!("New nice strings: {}", new_nice_strings);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(is_nice_string("ugknbfddgicrmopn"), true);
+        assert_eq!(is_nice_string("aaa"), true);
+        assert_eq!(is_nice_string("jchzalrnumimnmhp"), false);
+        assert_eq!(is_nice_string("haegwjzuvuyypxyu"), false);
+        assert_eq!(is_nice_string("dvszwmarrgswjxmb"), false);
+    }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(is_new_nice_string("qjhvhtzxzqqjkmpb"), true);
+        assert_eq!(is_new_nice_string("xxyxx"), true);
+        assert_eq!(is_new_nice_string("uurcxstgmygtbstg"), false);
+        assert_eq!(is_new_nice_string("ieodomkazucvgmuy"), false);
+    }
+
+    #[test]
+    fn test_awnsers() {
+        let input = include_str!("input.txt").trim();
+        let nice_strings = input.lines().filter(|s| is_nice_string(s)).count();
+        assert_eq!(nice_strings, 258);
+        let new_nice_strings = input.lines().filter(|s| is_new_nice_string(s)).count();
+        assert_eq!(new_nice_strings, 53);
+    }
+}
