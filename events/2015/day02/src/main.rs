@@ -81,7 +81,7 @@ mod tests {
 
     /// Test the answers against the correct answers.
     #[test]
-    fn test_awnsers() {
+    fn test_answers() {
         let input = include_str!("input.txt").trim();
         let (total_area, total_ribbon) = get_answers(input);
         assert_eq!((total_area, total_ribbon), (1586300, 3737498));

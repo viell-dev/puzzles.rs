@@ -82,7 +82,7 @@ mod tests {
     }
 
     #[test]
-    fn test_awnsers() {
+    fn test_answers() {
         let input = include_str!("input.txt").trim();
         let nice_strings = input.lines().filter(|s| is_nice_string(s)).count();
         assert_eq!(nice_strings, 258);
