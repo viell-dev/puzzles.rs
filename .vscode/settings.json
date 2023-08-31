@@ -1,16 +1,16 @@
 {
     "editor.formatOnSave": true,
-    "cSpell.words": [
-        "robo_santa",
-        "Santas"
-    ],
     "cSpell.ignoreWords": [
+        "LSHIFT",
+        "RSHIFT",
+        "Santas",
         "dvszwmarrgswjxmb",
         "haegwjzuvuyypxyu",
         "ieodomkazucvgmuy",
         "jchzalrnumimnmhp",
         "pqrstuv",
         "qjhvhtzxzqqjkmpb",
+        "robo_santa",
         "rsplitn",
         "ugknbfddgicrmopn",
         "uurcxstgmygtbstg",
