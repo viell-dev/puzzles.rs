@@ -12,6 +12,7 @@ fn main() {
 /// Get the answers for the puzzle.
 fn get_answers(input: &str) -> (usize, usize) {
     println!("{}", input);
+    (0, 0)
 }
 
 #[cfg(test)]
