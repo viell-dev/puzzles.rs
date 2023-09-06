@@ -1,4 +1,4 @@
-//! Day X: ___________
+//! Day 14: Reindeer Olympics
 
 /// Print the answers for the puzzle to the console.
 fn main() {
