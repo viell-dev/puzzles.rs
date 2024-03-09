@@ -1,34 +1,7 @@
 {
     "editor.formatOnSave": true,
-    "cSpell.ignoreWords": [
-        "LSHIFT",
-        "RSHIFT",
-        "Santas",
-        "abbceffg",
-        "abbcegjk",
-        "abcdffaa",
-        "abzz",
-        "acaa",
-        "akitas",
-        "cqjxxyzz",
-        "cqkaabcc",
-        "dvszwmarrgswjxmb",
-        "ghijklmn",
-        "ghjaabcc",
-        "haegwjzuvuyypxyu",
-        "hijklmmn",
-        "ieodomkazucvgmuy",
-        "itertools",
-        "jchzalrnumimnmhp",
-        "peekable",
-        "petgraph",
-        "pqrstuv",
-        "qjhvhtzxzqqjkmpb",
-        "robo_santa",
-        "rsplitn",
-        "ugknbfddgicrmopn",
-        "uurcxstgmygtbstg",
-        "vizslas",
-        "xxyxx"
+    "rust-analyzer.check.command": "clippy",
+    "cSpell.words": [
+        "viell"
     ]
 }

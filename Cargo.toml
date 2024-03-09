@@ -3,3 +3,4 @@ members = [
     "events/*/*",
     #"libs/*"
 ]
+resolver = "2"

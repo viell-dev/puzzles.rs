@@ -7,8 +7,8 @@ fn main() {
 
     println!("The instructions took Santa to floor {}.", floor);
     println!(
-        "The character that caused Santa to first {} {}.",
-        "enter the basement is at position", basement
+        "The character that caused Santa to first enter the basement is at position {}.",
+        basement
     );
 }
 
