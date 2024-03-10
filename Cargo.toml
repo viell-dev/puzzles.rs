@@ -1,6 +1,11 @@
 [workspace]
 members = [
-    "events/*/*",
-    #"libs/*"
+    # Advent of Code
+    ## Library for loading the puzzle data.
+    "puzzles/advent_of_code/data_loader",
+    ## Daily puzzles split into parts.
+    "puzzles/advent_of_code/????/day??_part?",
+    ## Library of common code for the daily puzzle.
+    "puzzles/advent_of_code/????/day??_common",
 ]
 resolver = "2"

@@ -1,0 +1,9 @@
+[package]
+name = "viell_puzzles_advent_of_code_2015_day01_part2"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+common = { version = "0.1.0", path = "../day01_common", package = "viell_puzzles_advent_of_code_2015_day01_common" }

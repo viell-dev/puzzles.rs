@@ -3,5 +3,12 @@
     "rust-analyzer.check.command": "clippy",
     "cSpell.words": [
         "viell"
-    ]
+    ],
+    "[plaintext]": {
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 120,
+        "files.insertFinalNewline": false,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+    }
 }
