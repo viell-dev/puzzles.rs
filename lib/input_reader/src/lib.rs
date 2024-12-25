@@ -165,7 +165,9 @@ pub fn read_input(path: Option<&str>, message: Option<&str>) -> Result<Vec<Strin
 
     // Attempt to read input from file
     if let Some(path) = path {
-        return read_input_from_file(path);
+        if let Ok(lines) = read_input_from_file(path) {
+            return Ok(lines);
+        }
     }
 
     // Attempt to read input from stdin

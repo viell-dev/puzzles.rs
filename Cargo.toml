@@ -1,5 +1,5 @@
 [workspace]
-members = ["lib/*"]
+members = ["lib/*", "puzzle/advent_of_code/20??/day??"]
 resolver = "2"
 
 [workspace.lints.rust]
