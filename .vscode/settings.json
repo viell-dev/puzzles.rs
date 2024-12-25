@@ -1,0 +1,47 @@
+{
+  // Unset default formatter. Use language specific settings for formatters.
+  "editor.defaultFormatter": null,
+
+  // Enable format on save.
+  "editor.formatOnSave": true,
+
+  // Use clippy as the rust-analyzer's check command.
+  "rust-analyzer.check.command": "clippy",
+
+  // JSON specific settings.
+  "[json]": {
+    // Format with Prettier.
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // JSONC specific settings.
+  "[jsonc]": {
+    // Format with Prettier.
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Rust specific settings.
+  "[rust]": {
+    // Format with Rust analyzer.
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+
+  // TOML specific settings.
+  "[toml]": {
+    // Format with Even Better TOML.
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+
+  // Words to ignore in spell-checking.
+  "cSpell.ignoreWords": [
+    "MSVC",
+    "clippy",
+    "expl_impl_clone_on_copy",
+    "linkedlist",
+    "rustc",
+    "rustlib"
+  ],
+
+  // Words to add to spell-checker.
+  "cSpell.words": ["viell"]
+}
