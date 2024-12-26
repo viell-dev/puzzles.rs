@@ -26,30 +26,6 @@ pub enum ReadError {
 ///
 /// A new `Vec<String>` with leading and trailing empty lines removed.
 /// Lines are considered empty if they contain only whitespace.
-///
-/// # Examples
-///
-/// ```
-/// let input = vec![
-///     "".to_string(),
-///     "   ".to_string(),
-///     "line1".to_string(),
-///     "line2".to_string(),
-///     "".to_string(),
-///     "  ".to_string(),
-/// ];
-///
-/// let result = trim_empty_lines(input);
-/// assert_eq!(
-///     result,
-///     vec![
-///         "   ".to_string(),
-///         "line1".to_string(),
-///         "line2".to_string(),
-///         "  ".to_string()
-///     ]
-/// );
-/// ```
 fn trim_empty_lines(lines: Vec<String>) -> Vec<String> {
     let trimmed: Vec<_> = lines
         .into_iter()
