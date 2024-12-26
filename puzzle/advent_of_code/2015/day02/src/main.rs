@@ -1,4 +1,4 @@
-use input_reader::read_input;
+use input_reader::InputReader;
 
 #[derive(Clone, Debug, PartialEq)]
 struct Present {
@@ -60,7 +60,8 @@ fn ribbon_length(iter: impl Iterator<Item = Present>) -> u32 {
 }
 
 fn main() {
-    let input = match read_input(Some("./input.txt"), None) {
+    let input_reader = InputReader::new().with_path("./input.txt");
+    let input = match input_reader.read() {
         Ok(lines) => lines
             .iter()
             .filter_map(|line| match line.trim() {

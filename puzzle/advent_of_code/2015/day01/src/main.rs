@@ -1,4 +1,4 @@
-use input_reader::read_input;
+use input_reader::InputReader;
 
 #[derive(Clone, Debug, PartialEq)]
 enum Movement {
@@ -47,7 +47,8 @@ fn basement_instruction(iter: impl Iterator<Item = Movement>) -> Option<usize> {
 }
 
 fn main() {
-    let input = match read_input(Some("./input.txt"), None) {
+    let input_reader = InputReader::new().with_path("./input.txt");
+    let input = match input_reader.read() {
         Ok(lines) => match lines.first() {
             Some(line) if !line.trim().is_empty() => line.trim().to_owned(),
             _ => panic!("Error reading input: Input was empty"),
