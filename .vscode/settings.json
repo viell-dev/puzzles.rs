@@ -38,6 +38,7 @@
     "clippy",
     "expl_impl_clone_on_copy",
     "linkedlist",
+    "pqrstuv",
     "robo",
     "rustc",
     "rustlib"
