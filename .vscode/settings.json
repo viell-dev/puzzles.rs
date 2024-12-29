@@ -34,7 +34,9 @@
 
   // Words to ignore in spell-checking.
   "cSpell.ignoreWords": [
+    "LSHIFT",
     "MSVC",
+    "RSHIFT",
     "clippy",
     "dvszwmarrgswjxmb",
     "expl_impl_clone_on_copy",
