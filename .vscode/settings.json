@@ -57,5 +57,5 @@
   ],
 
   // Words to add to spell-checker.
-  "cSpell.words": ["viell"]
+  "cSpell.words": ["hexdigit", "peekable", "viell"]
 }
