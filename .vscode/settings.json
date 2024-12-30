@@ -47,6 +47,7 @@
     "rsplitn",
     "rustc",
     "rustlib",
+    "serde",
     "splitn"
   ],
 

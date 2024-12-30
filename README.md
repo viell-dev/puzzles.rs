@@ -15,3 +15,4 @@
 9. [All in a Single Night](puzzle/advent_of_code/2015/day09)
 10. [Elves Look, Elves Say](puzzle/advent_of_code/2015/day10)
 11. [Corporate Policy](puzzle/advent_of_code/2015/day11)
+12. [JSAbacusFramework.io](puzzle/advent_of_code/2015/day12)
