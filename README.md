@@ -14,3 +14,4 @@
 8. [Matchsticks](puzzle/advent_of_code/2015/day08)
 9. [All in a Single Night](puzzle/advent_of_code/2015/day09)
 10. [Elves Look, Elves Say](puzzle/advent_of_code/2015/day10)
+11. [Corporate Policy](puzzle/advent_of_code/2015/day11)
