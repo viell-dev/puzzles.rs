@@ -46,6 +46,7 @@ mod tests {
 
     #[test]
     fn test_parse_input() {
+        //spell-checker: disable
         assert_eq!(
             parse_input("abcdef").skip(100).take(10).collect::<Vec<_>>(),
             vec![
@@ -79,17 +80,22 @@ mod tests {
                 "5fa38374791139656281bd383979d658".to_owned()
             ]
         );
+        //spell-checker: enable
     }
 
     #[test]
     fn test_five_zeros() {
+        //spell-checker: disable
         assert_eq!(five_zeros(parse_input("abcdef")), 609043);
         assert_eq!(five_zeros(parse_input("pqrstuv")), 1048970);
+        //spell-checker: enable
     }
 
     #[test]
     fn test_six_zeros() {
+        //spell-checker: disable
         assert_eq!(six_zeros(parse_input("abcdef")), 6742839);
         assert_eq!(six_zeros(parse_input("pqrstuv")), 5714438);
+        //spell-checker: enable
     }
 }

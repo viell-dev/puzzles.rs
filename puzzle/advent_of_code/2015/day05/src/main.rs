@@ -112,6 +112,7 @@ mod tests {
 
     #[test]
     fn test_old_nice_string() {
+        //spell-checker: disable
         assert!(old_nice_string("ugknbfddgicrmopn"));
         assert!(old_nice_string("aaa"));
 
@@ -122,10 +123,12 @@ mod tests {
         assert!(!old_nice_string("xxyxx"));
         assert!(!old_nice_string("uurcxstgmygtbstg"));
         assert!(!old_nice_string("ieodomkazucvgmuy"));
+        //spell-checker: enable
     }
 
     #[test]
     fn test_new_nice_string() {
+        //spell-checker: disable
         assert!(new_nice_string("qjhvhtzxzqqjkmpb"));
         assert!(new_nice_string("xxyxx"));
 
@@ -136,5 +139,6 @@ mod tests {
         assert!(!new_nice_string("dvszwmarrgswjxmb"));
         assert!(!new_nice_string("uurcxstgmygtbstg"));
         assert!(!new_nice_string("ieodomkazucvgmuy"));
+        //spell-checker: enable
     }
 }

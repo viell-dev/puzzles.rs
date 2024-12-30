@@ -38,24 +38,16 @@
     "MSVC",
     "RSHIFT",
     "clippy",
-    "dvszwmarrgswjxmb",
     "expl_impl_clone_on_copy",
-    "haegwjzuvuyypxyu",
-    "ieodomkazucvgmuy",
     "itertools",
-    "jchzalrnumimnmhp",
     "linkedlist",
+    "multipeek",
     "petgraph",
-    "pqrstuv",
-    "qjhvhtzxzqqjkmpb",
     "robo",
     "rsplitn",
     "rustc",
     "rustlib",
-    "splitn",
-    "ugknbfddgicrmopn",
-    "uurcxstgmygtbstg",
-    "xxyxx"
+    "splitn"
   ],
 
   // Words to add to spell-checker.
