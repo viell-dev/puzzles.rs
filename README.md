@@ -16,3 +16,4 @@
 10. [Elves Look, Elves Say](puzzle/advent_of_code/2015/day10)
 11. [Corporate Policy](puzzle/advent_of_code/2015/day11)
 12. [JSAbacusFramework.io](puzzle/advent_of_code/2015/day12)
+13. [Knights of the Dinner Table](puzzle/advent_of_code/2015/day13)
