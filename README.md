@@ -18,3 +18,4 @@
 12. [JSAbacusFramework.io](puzzle/advent_of_code/2015/day12)
 13. [Knights of the Dinner Table](puzzle/advent_of_code/2015/day13)
 14. [Reindeer Olympics](puzzle/advent_of_code/2015/day14)
+15. [Science for Hungry People](puzzle/advent_of_code/2015/day15)
