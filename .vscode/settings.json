@@ -35,6 +35,7 @@
   // Words to ignore in spell-checking.
   "cSpell.ignoreWords": [
     "LSHIFT",
+    "MFCSAM",
     "MSVC",
     "RSHIFT",
     "clippy",
@@ -52,5 +53,5 @@
   ],
 
   // Words to add to spell-checker.
-  "cSpell.words": ["hexdigit", "peekable", "viell"]
+  "cSpell.words": ["akitas", "hexdigit", "peekable", "viell", "vizslas"]
 }
