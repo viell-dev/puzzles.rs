@@ -1,7 +1,7 @@
 use std::{
     env::{self},
     fs::File,
-    io::{self, BufRead, BufReader},
+    io::{self, BufRead, BufReader, Lines},
     path::PathBuf,
 };
 
@@ -17,6 +17,8 @@ pub enum ReadError {
     FileReadError(io::Error),
     /// Error occurred while reading the path of the current executable.
     ExePathReadError(io::Error),
+    /// Error occurred while trying to stream a file.
+    StreamingRequiresPath,
 }
 
 impl std::error::Error for ReadError {}
@@ -27,6 +29,9 @@ impl std::fmt::Display for ReadError {
             Self::StdinReadError(e) => write!(f, "Failed to read from stdin: {}", e),
             Self::FileReadError(e) => write!(f, "Failed to read from file: {}", e),
             Self::ExePathReadError(e) => write!(f, "Failed to read executable path: {}", e),
+            Self::StreamingRequiresPath => {
+                write!(f, "Cannot stream input without a path specified")
+            }
         }
     }
 }
@@ -59,32 +64,175 @@ impl InputReader {
     }
 
     /// Performs the input reading operation based on the configured options.
+    /// Returns all lines at once as a Vec<String>.
+    ///
+    /// # Examples
+    /// ```
+    /// use input_reader::InputReader;
+    ///
+    /// // Read from a file
+    /// let reader = InputReader::new()
+    ///     .with_path("input.txt");
+    /// let lines = reader.read().expect("Failed to read input");
+    ///
+    /// // Read from stdin with custom prompt
+    /// let reader = InputReader::new()
+    ///     .with_message("Please enter data:");
+    /// let lines = reader.read().expect("Failed to read input");
+    ///
+    /// // Read with defaults (uses stdin with default prompt)
+    /// let reader = InputReader::new();
+    /// let lines = reader.read().expect("Failed to read input");
+    /// ```
     pub fn read(&self) -> Result<Vec<String>, ReadError> {
         read_input(self.path.as_deref(), self.message.as_deref())
     }
+
+    /// Returns a line iterator for file input if a path has been set.
+    /// This is useful for processing large files line by line without loading
+    /// the entire file into memory.
+    ///
+    /// # Examples
+    /// ```
+    /// use input_reader::InputReader;
+    ///
+    /// // Basic streaming example
+    /// let reader = InputReader::new()
+    ///     .with_path("large_file.txt");
+    ///
+    /// match reader.read_streaming() {
+    ///     Ok(lines) => {
+    ///         for line in lines {
+    ///             if let Ok(line) = line {
+    ///                 println!("Processing: {}", line);
+    ///             }
+    ///         }
+    ///     },
+    ///     Err(e) => eprintln!("Failed to read file: {}", e)
+    /// }
+    /// ```
+    ///
+    /// Use `read_streaming()` when you need to:
+    /// - Process very large files without loading them entirely into memory
+    /// - Parse or filter lines before any trimming
+    /// - Have more control over the line processing
+    ///
+    /// For simple cases where you just need trimmed input, prefer using `read()`.
+    /// However, if you need to combine streaming with trimming, here's how:
+    /// ```
+    /// use input_reader::{InputReader, trim_empty_lines};
+    ///
+    /// let reader = InputReader::new()
+    ///     .with_path("large_file.txt");
+    ///
+    /// if let Ok(lines) = reader.read_streaming() {
+    ///     // Collect lines for trimming
+    ///     let collected: Vec<String> = lines
+    ///         .map(|line| line.expect("Failed to read line"))
+    ///         .collect();
+    ///     
+    ///     // Trim empty lines from start and end
+    ///     let trimmed = trim_empty_lines(&collected);
+    ///     
+    ///     // Process trimmed lines
+    ///     for line in trimmed {
+    ///         println!("Processing: {}", line);
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// # Errors
+    /// Returns `ReadError::StreamingRequiresPath` if no path was set.
+    pub fn read_streaming(&self) -> Result<Lines<BufReader<File>>, ReadError> {
+        match &self.path {
+            Some(path) => {
+                let file = File::open(path).map_err(ReadError::FileReadError)?;
+                Ok(BufReader::new(file).lines())
+            }
+            None => Err(ReadError::StreamingRequiresPath),
+        }
+    }
 }
 
-/// Trims leading and trailing empty lines from a vector of strings.
+/// Trims leading and trailing empty lines from a slice of strings.
 /// Empty lines are those with zero length. Lines containing only whitespace
 /// are not considered empty.
 ///
+/// The function returns references to the original strings, avoiding allocations
+/// when possible. If owned strings are needed, the results can be converted using
+/// `String::from` or `to_string()`.
+///
 /// # Arguments
-/// * `lines` - A slice of strings to process
+/// * `lines` - A slice of strings to process. Can be either owned (`String`) or
+///            borrowed (`&str`) due to the generic bound `S: AsRef<str>`.
 ///
 /// # Returns
-/// A new `Vec<String>` with leading and trailing empty lines removed.
-fn trim_empty_lines(lines: &[String]) -> Vec<String> {
-    let mut start = 0;
-    let mut end = lines.len();
-
-    while start < end && lines[start].is_empty() {
-        start += 1;
+/// A new `Vec<&str>` with references to the lines, excluding leading and trailing
+/// empty lines.
+///
+/// # Examples
+/// ```
+/// use input_reader::trim_empty_lines;
+///
+/// // Using with string literals (&str)
+/// let lines = ["", "hello", "world", ""];
+/// let trimmed = trim_empty_lines(&lines);
+/// assert_eq!(trimmed, vec!["hello", "world"]);
+///
+/// // Using with owned Strings
+/// let owned = vec![String::from(""), String::from("hello")];
+/// let trimmed = trim_empty_lines(&owned);
+/// assert_eq!(trimmed, vec!["hello"]);
+///
+/// // Empty lines between content are preserved
+/// let lines = ["", "first", "", "", "last", ""];
+/// let trimmed = trim_empty_lines(&lines);
+/// assert_eq!(trimmed, vec!["first", "", "", "last"]);
+///
+/// // Converting results to owned Strings if needed
+/// let lines = ["", "hello", "world", ""];
+/// let owned_results: Vec<String> = trim_empty_lines(&lines)
+///     .into_iter()
+///     .map(String::from)
+///     .collect();
+/// assert!(matches!(&owned_results[0], String));
+/// assert_eq!(owned_results, vec!["hello", "world"]);
+///
+/// // Whitespace-only lines are preserved
+/// let lines = ["", "  ", "hello", ""];
+/// let trimmed = trim_empty_lines(&lines);
+/// assert_eq!(trimmed, vec!["  ", "hello"]);
+/// ```
+pub fn trim_empty_lines<S: AsRef<str>>(lines: &[S]) -> Vec<&str> {
+    if lines.is_empty() {
+        return Vec::new();
     }
-    while start < end && lines[end - 1].is_empty() {
-        end -= 1;
+
+    // Find start index (first non-empty line)
+    let start = lines
+        .iter()
+        .position(|line| !line.as_ref().is_empty())
+        .unwrap_or(lines.len());
+
+    // If all lines were empty, return empty vec
+    if start == lines.len() {
+        return Vec::new();
     }
 
-    lines[start..end].to_vec()
+    // Find end index (last non-empty line)
+    let end = lines
+        .iter()
+        .rposition(|line| !line.as_ref().is_empty())
+        .unwrap_or(0)
+        + 1;
+
+    // Allocate vec with exact capacity needed
+    let mut result = Vec::with_capacity(end - start);
+
+    // Single pass to collect references
+    result.extend(lines[start..end].iter().map(|s| s.as_ref()));
+
+    result
 }
 
 /// Reads input from command-line arguments, skipping the first argument (program name).
@@ -99,6 +247,9 @@ fn trim_empty_lines(lines: &[String]) -> Vec<String> {
 fn read_input_from_args(args: impl Iterator<Item = String>) -> Vec<String> {
     let lines = args.skip(1).collect::<Vec<_>>();
     trim_empty_lines(&lines)
+        .into_iter()
+        .map(String::from)
+        .collect()
 }
 
 /// Reads input from a specified file.
@@ -119,7 +270,10 @@ fn read_input_from_file(path: &str) -> Result<Vec<String>, ReadError> {
         .collect::<Result<Vec<_>, _>>()
         .map_err(ReadError::FileReadError)?;
 
-    Ok(trim_empty_lines(&lines))
+    Ok(trim_empty_lines(&lines)
+        .into_iter()
+        .map(String::from)
+        .collect())
 }
 
 /// Reads input from a generic reader until two successive blank lines are encountered.
@@ -160,7 +314,10 @@ where
         lines.push(line);
     }
 
-    Ok(trim_empty_lines(&lines))
+    Ok(trim_empty_lines(&lines)
+        .into_iter()
+        .map(String::from)
+        .collect())
 }
 
 /// Determines the appropriate working directory for the application.
