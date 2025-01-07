@@ -85,7 +85,28 @@ impl InputReader {
     /// let lines = reader.read().expect("Failed to read input");
     /// ```
     pub fn read(&self) -> Result<Vec<String>, ReadError> {
-        read_input(self.path.as_deref(), self.message.as_deref())
+        // Change working directory to the project directory or executable directory
+        env::set_current_dir(get_working_dir()?).map_err(ReadError::ExePathReadError)?;
+
+        // Attempt to read input from args
+        let args = read_input_from_args(env::args());
+        if !args.is_empty() {
+            return Ok(args);
+        }
+
+        // Attempt to read input from file
+        if let Some(path) = &self.path {
+            if let Ok(lines) = read_input_from_file(path) {
+                return Ok(lines);
+            }
+        }
+
+        // Attempt to read input from stdin
+        let stdin = io::stdin();
+        read_input_from_reader(
+            stdin.lock(),
+            self.message.as_deref().unwrap_or(DEFAULT_MESSAGE),
+        )
     }
 
     /// Returns a line iterator for file input if a path has been set.
@@ -144,6 +165,9 @@ impl InputReader {
     /// # Errors
     /// Returns `ReadError::StreamingRequiresPath` if no path was set.
     pub fn read_streaming(&self) -> Result<Lines<BufReader<File>>, ReadError> {
+        // Change working directory to the project directory or executable directory
+        env::set_current_dir(get_working_dir()?).map_err(ReadError::ExePathReadError)?;
+
         match &self.path {
             Some(path) => {
                 let file = File::open(path).map_err(ReadError::FileReadError)?;
@@ -348,45 +372,6 @@ fn get_working_dir() -> Result<PathBuf, ReadError> {
                         .map(|p| p.to_path_buf())
                 })
         })
-}
-
-/// Reads input from one of three sources, in the following priority:
-/// 1. Command-line arguments (excluding the program name).
-/// 2. A specified file.
-/// 3. Stdin, prompted with a message.
-///
-/// # Arguments
-///
-/// - `path`: Optional file path to read from.
-/// - `message`: Optional message to display when prompting for stdin.
-///
-/// # Returns
-///
-/// A `Result` containing a `Vec<String>` of lines or a `ReadError` if reading fails.
-///
-/// # Edge Cases
-///
-/// If the input contains only empty lines, the returned Vec<String> will be empty.
-fn read_input(path: Option<&str>, message: Option<&str>) -> Result<Vec<String>, ReadError> {
-    // Change working directory to the project directory or the directory of the current executable.
-    env::set_current_dir(get_working_dir()?).map_err(ReadError::ExePathReadError)?;
-
-    // Attempt to read input from args
-    let args = read_input_from_args(env::args());
-    if !args.is_empty() {
-        return Ok(args);
-    }
-
-    // Attempt to read input from file
-    if let Some(path) = path {
-        if let Ok(lines) = read_input_from_file(path) {
-            return Ok(lines);
-        }
-    }
-
-    // Attempt to read input from stdin
-    let stdin = io::stdin();
-    read_input_from_reader(stdin.lock(), message.unwrap_or(DEFAULT_MESSAGE))
 }
 
 #[cfg(test)]
