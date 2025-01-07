@@ -86,19 +86,18 @@ fn new_nice_string(line: &str) -> bool {
 
 fn main() {
     let input_reader = InputReader::new().with_path("./input.txt");
-    let input = match input_reader.read() {
-        Ok(lines) => lines
-            .iter()
-            .filter_map(|line| match line.trim() {
-                line if !line.is_empty() => Some(line.to_owned()),
-                _ => None,
-            })
-            .collect::<Vec<_>>(),
-        Err(error) => panic!("Error reading input: {:#?}", error),
-    };
 
-    let old_nice_strings = input.iter().filter(|line| old_nice_string(line)).count();
-    let new_nice_strings = input.iter().filter(|line| new_nice_string(line)).count();
+    let (old_nice_strings, new_nice_strings) = input_reader
+        .read_streaming()
+        .expect("failed to read input")
+        .map(|line| line.expect("failed to read line"))
+        .filter(|line| !line.trim().is_empty())
+        .fold((0, 0), |(old_nice_strings, new_nice_strings), line| {
+            (
+                old_nice_strings + old_nice_string(&line) as usize,
+                new_nice_strings + new_nice_string(&line) as usize,
+            )
+        });
 
     println!(
         "Old nice strings: {}, New nice strings: {}",

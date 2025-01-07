@@ -61,20 +61,19 @@ fn string_encoded_length<S: AsRef<str>>(string: S) -> usize {
 
 fn main() {
     let input_reader = InputReader::new().with_path("./input.txt");
-    let input = match input_reader.read() {
-        Ok(lines) => lines
-            .iter()
-            .filter_map(|line| match line.trim() {
-                line if !line.is_empty() => Some(line.to_owned()),
-                _ => None,
-            })
-            .collect::<Vec<_>>(),
-        Err(error) => panic!("Error reading input: {:#?}", error),
-    };
 
-    let character_sum = input.iter().map(string_character_length).sum::<usize>();
-    let memory_sum = input.iter().map(string_memory_length).sum::<usize>();
-    let encoded_sum = input.iter().map(string_encoded_length).sum::<usize>();
+    let (character_sum, memory_sum, encoded_sum) = input_reader
+        .read_streaming()
+        .expect("failed to read input")
+        .map(|line| line.expect("failed to read line"))
+        .filter(|line| !line.trim().is_empty())
+        .fold((0, 0, 0), |(chars, mem, enc), line| {
+            (
+                chars + string_character_length(&line),
+                mem + string_memory_length(&line),
+                enc + string_encoded_length(&line),
+            )
+        });
 
     let diff1 = character_sum - memory_sum;
     let diff2 = encoded_sum - character_sum;
