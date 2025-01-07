@@ -39,6 +39,7 @@
     "MSVC",
     "RSHIFT",
     "clippy",
+    "cursorrules",
     "expl_impl_clone_on_copy",
     "itertools",
     "linkedlist",
