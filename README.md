@@ -21,3 +21,4 @@
 15. [Science for Hungry People](puzzle/advent_of_code/2015/day15)
 16. [Aunt Sue](puzzle/advent_of_code/2015/day16)
 17. [No Such Thing as Too Much](puzzle/advent_of_code/2015/day17)
+18. [Like a GIF For Your Yard](puzzle/advent_of_code/2015/day18)
