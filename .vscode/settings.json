@@ -38,8 +38,10 @@
     "MFCSAM",
     "MSVC",
     "RSHIFT",
+    "Swatinem",
     "clippy",
     "cursorrules",
+    "dtolnay",
     "expl_impl_clone_on_copy",
     "itertools",
     "linkedlist",
@@ -49,6 +51,7 @@
     "rposition",
     "rsplitn",
     "rustc",
+    "rustfmt",
     "rustlib",
     "serde",
     "splitn"

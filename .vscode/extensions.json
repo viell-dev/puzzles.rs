@@ -4,6 +4,8 @@
     "fill-labs.dependi",
     "rust-lang.rust-analyzer",
     "streetsidesoftware.code-spell-checker",
-    "tamasfe.even-better-toml"
+    "tamasfe.even-better-toml",
+    "swellaby.vscode-rust-test-adapter",
+    "github.vscode-github-actions"
   ]
 }
