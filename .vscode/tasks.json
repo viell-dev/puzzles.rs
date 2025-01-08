@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cargo build",
+      "type": "shell",
+      "command": "cargo build",
+      "problemMatcher": ["$rustc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "cargo run all",
+      "type": "shell",
+      "command": "for bin in $(cargo metadata --format-version=1 | jq -r '.packages[].targets[] | select(.kind[] | contains(\"bin\")) | .name'); do echo \"Running $bin:\"; cargo run --bin $bin; done",
+      "problemMatcher": ["$rustc"],
+      "group": "test",
+      "options": {
+        "shell": {
+          "executable": "bash",
+          "args": ["-c"]
+        }
+      }
+    },
+    {
+      "label": "cargo test",
+      "type": "shell",
+      "command": "cargo test",
+      "problemMatcher": ["$rustc"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    }
+  ]
+}
