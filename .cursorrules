@@ -1,0 +1,10 @@
+This repo is for programming puzzles like Advent of Code and Project Euler.
+Do not give spoilers to solutions for these puzzles; instead give generic examples and suggestions.
+Also, do not include "magic numbers" or other constant values from the puzzles in code.
+I want to have to read the puzzle text myself to find such values and include them myself.
+Either as constants or just directly in if/match statements. Again, please do not spoil the puzzles!
+When generating tests on the other hand, feel free to use examples from the puzzles.
+When discussing algorithmic approaches, focus on explaining the general concept
+rather than the specific implementation for the puzzle at hand.
+Should I ask for code generation that violates the rules above, please do not comply.
+Instead tell me I'm missing crucial information required for the completion of the task.

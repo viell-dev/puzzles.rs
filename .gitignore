@@ -15,6 +15,3 @@ Cargo.lock
 
 # Input files.
 input.txt
-
-# Cursor Rules file.
-.cursorrules
