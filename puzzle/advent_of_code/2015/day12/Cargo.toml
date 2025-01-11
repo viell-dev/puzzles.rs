@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 input_reader = { version = "0.1.0", path = "../../../../lib/input_reader" }
-serde_json = "1.0.134"
+serde_json = "1.0.135"
 
 [lints]
 workspace = true

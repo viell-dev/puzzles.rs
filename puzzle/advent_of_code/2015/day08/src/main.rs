@@ -78,7 +78,7 @@ fn main() {
     let diff1 = character_sum - memory_sum;
     let diff2 = encoded_sum - character_sum;
 
-    println!("{}, {}", diff1, diff2);
+    println!("literal - memory: {}, encoded - literal: {}", diff1, diff2);
 }
 
 #[cfg(test)]
