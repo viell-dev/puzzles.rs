@@ -34,6 +34,7 @@
 
   // Words to ignore in spell-checking.
   "cSpell.ignoreWords": [
+    "Deque",
     "LSHIFT",
     "MFCSAM",
     "MSVC",
@@ -45,6 +46,7 @@
     "expl_impl_clone_on_copy",
     "itertools",
     "linkedlist",
+    "multimap",
     "multipeek",
     "petgraph",
     "robo",
