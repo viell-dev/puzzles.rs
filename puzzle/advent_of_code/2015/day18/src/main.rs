@@ -178,7 +178,7 @@ fn read_input() -> Result<Grid, GridError> {
     let lines = InputReader::new()
         .with_path("./input.txt")
         .read_streaming()?
-        .filter(|line| line.as_ref().map_or(false, |l| !l.trim().is_empty()));
+        .filter(|line| line.as_ref().is_ok_and(|l| !l.trim().is_empty()));
 
     parse_lines(lines)
 }

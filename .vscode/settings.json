@@ -56,7 +56,8 @@
     "rustfmt",
     "rustlib",
     "serde",
-    "splitn"
+    "splitn",
+    "unexpected_cfgs"
   ],
 
   // Words to add to spell-checker.
