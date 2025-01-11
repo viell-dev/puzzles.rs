@@ -22,3 +22,4 @@
 16. [Aunt Sue](puzzle/advent_of_code/2015/day16)
 17. [No Such Thing as Too Much](puzzle/advent_of_code/2015/day17)
 18. [Like a GIF For Your Yard](puzzle/advent_of_code/2015/day18)
+19. [Medicine for Rudolph](puzzle/advent_of_code/2015/day19)
