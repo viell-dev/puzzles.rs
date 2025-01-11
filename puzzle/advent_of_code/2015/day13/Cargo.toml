@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 input_reader = { version = "0.1.0", path = "../../../../lib/input_reader" }
-petgraph = "0.7.0"
+petgraph = "0.7.1"
 
 [lints]
 workspace = true
