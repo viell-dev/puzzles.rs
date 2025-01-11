@@ -1,0 +1,10 @@
+[package]
+name = "advent_of_code_2015_day20"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+input_reader = { version = "0.1.0", path = "../../../../lib/input_reader" }
+
+[lints]
+workspace = true
