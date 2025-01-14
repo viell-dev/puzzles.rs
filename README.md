@@ -24,3 +24,4 @@
 18. [Like a GIF For Your Yard](puzzle/advent_of_code/2015/day18)
 19. [Medicine for Rudolph](puzzle/advent_of_code/2015/day19)
 20. [Infinite Elves and Infinite Houses](puzzle/advent_of_code/2015/day20)
+21. [RPG Simulator 20XX](puzzle/advent_of_code/2015/day21)
