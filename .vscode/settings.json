@@ -61,5 +61,20 @@
   ],
 
   // Words to add to spell-checker.
-  "cSpell.words": ["akitas", "hexdigit", "peekable", "viell", "vizslas"]
+  "cSpell.words": [
+    "akitas",
+    "Bandedmail",
+    "Chainmail",
+    "Greataxe",
+    "hexdigit",
+    "Longsword",
+    "peekable",
+    "Platemail",
+    "Shortsword",
+    "Splintmail",
+    "unequipping",
+    "viell",
+    "vizslas",
+    "Warhammer"
+  ]
 }
