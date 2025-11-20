@@ -3,7 +3,7 @@
 //! This module contains all the public and internal types used throughout the library.
 
 use std::{
-    env,
+    env, error, fmt,
     fs::File,
     io::{self, BufRead, BufReader},
 };
@@ -36,6 +36,26 @@ impl From<env::VarError> for Error {
     }
 }
 
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Error::NotFound => write!(f, "path or directory not found"),
+            Error::Io(err) => write!(f, "I/O error: {err}"),
+            Error::Var(err) => write!(f, "environment variable error: {err}"),
+        }
+    }
+}
+
+impl error::Error for Error {
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
+        match self {
+            Error::NotFound => None,
+            Error::Io(err) => Some(err),
+            Error::Var(err) => Some(err),
+        }
+    }
+}
+
 // =============================================================================
 // InternalError
 // =============================================================================
@@ -60,10 +80,19 @@ impl From<Error> for InternalError {
     }
 }
 
-
 impl From<env::VarError> for InternalError {
     fn from(err: env::VarError) -> Self {
         InternalError::Path(err.into())
+    }
+}
+
+impl fmt::Display for InternalError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            InternalError::NoInput => write!(f, "no input provided or found"),
+            InternalError::Path(err) => write!(f, "path error: {err}"),
+            InternalError::Io(err) => write!(f, "I/O error: {err}"),
+        }
     }
 }
 
