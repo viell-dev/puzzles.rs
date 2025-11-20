@@ -1,0 +1,14 @@
+[package]
+name = "input_reader"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+utf8-chars = "3.0"
+
+[dev-dependencies]
+tempfile = "3.23"
