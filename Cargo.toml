@@ -1,10 +1,11 @@
 [workspace]
-members = ["crates/*"]
+members = ["lib/*"]
 resolver = "2"
 
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
 
 [workspace.lints.rust]
 future_incompatible = { level = "warn", priority = -1 }
@@ -20,6 +21,8 @@ all = { level = "warn", priority = -1 }
 cargo = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 
+cargo_common_metadata = "allow"
+expect_used = "allow"
 missing_errors_doc = "allow"
 missing_panics_doc = "allow"
 missing_safety_doc = "allow"
@@ -30,7 +33,6 @@ allow_attributes_without_reason = "warn"
 arithmetic_side_effects = "warn"
 as_conversions = "warn"
 cfg_not_test = "warn"
-expect_used = "warn"
 indexing_slicing = "warn"
 module_name_repetitions = "warn"
 print_stderr = "warn"
