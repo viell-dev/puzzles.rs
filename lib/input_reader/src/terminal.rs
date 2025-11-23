@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 #[expect(clippy::print_stdout, reason = "intentional user-facing output")]
 pub(crate) fn print_help(identifier: &str) {
     println!(
@@ -37,14 +39,60 @@ No input data found. Exiting."
     );
 }
 
+/// Prints a confirmation message that input was saved to a file.
+#[expect(clippy::print_stdout, reason = "intentional user-facing output")]
+pub(crate) fn print_input_saved(identifier: &str) {
+    if cfg!(debug_assertions) {
+        println!(
+            "\
+Saved input to: ./input/{identifier}.txt"
+        );
+    } else {
+        println!(
+            "\
+Saved input."
+        );
+    }
+}
+
+#[expect(clippy::print_stdout, reason = "intentional user-facing output")]
+pub(crate) fn print_save_aborted() {
+    println!(
+        "\
+Save aborted."
+    );
+}
+
+#[expect(clippy::print_stdout, reason = "intentional user-facing output")]
+pub(crate) fn print_nothing_to_save() {
+    println!(
+        "\
+Nothing to save."
+    );
+}
+
+#[expect(clippy::print_stderr, reason = "intentional warning output")]
+pub(crate) fn print_truncation_warning() {
+    eprintln!(
+        "\
+Warning: Input line may have been truncated (TTY buffer limit)."
+    );
+}
+
+#[expect(clippy::print_stderr, reason = "intentional warning output")]
+pub(crate) fn print_save_refused() {
+    eprintln!(
+        "\
+Warning: Save refused due to potential data truncation."
+    );
+}
+
 /// Prompts the user for confirmation to overwrite an existing file.
 ///
 /// Returns `true` if the user confirms (responds with 'y' or 'Y'),
 /// `false` otherwise.
 #[expect(clippy::print_stdout, reason = "intentional user-facing output")]
 pub(crate) fn prompt_overwrite_confirmation() -> bool {
-    use std::io::{self, Write};
-
     println!(
         "\
 Input file already exists. Overwrite? (y/N): "
