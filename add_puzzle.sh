@@ -30,7 +30,7 @@ info() {
 
 # Validate arguments
 if [ $# -ne 2 ]; then
-    error "Usage: $0 <path> <name>\n  Example: $0 advent_of_code/2015/day02 aoc_2015_day02"
+    error "Usage: $0 <path> <name>\n  Example: $0 advent_of_code/2025/day01 aoc_2025_day01"
 fi
 
 PUZZLE_PATH="$1"
@@ -71,13 +71,16 @@ workspace = true
 
 [dependencies]
 input_reader = { path = "$RELATIVE_PATH" }
+derive_more = { version = "2", features = ["full"] }
 EOF
 
 success "Created: $FULL_PATH/Cargo.toml"
 
-# Create src/main.rs
-cat > "$FULL_PATH/src/main.rs" <<'EOF'
-use input_reader::{Outcome, read_input};
+# Create src/main.rs based on puzzle type
+if [[ "$PUZZLE_PATH" == advent_of_code/* ]]; then
+    # Advent of Code template with part1 and part2
+    cat > "$FULL_PATH/src/main.rs" <<'EOF'
+use input_reader::{Input, Outcome, read_input};
 
 fn main() {
     let input = match read_input().expect("failed to read input") {
@@ -85,9 +88,75 @@ fn main() {
         Outcome::Continue(input) => input,
     };
 
-    todo!()
+    let _rename_me = parse_input(input);
+
+    solve_part1(_rename_me.clone());
+    solve_part2(_rename_me);
 }
+
+// -----------------------------------------------------------------------------
+// Input Parsing
+// -----------------------------------------------------------------------------
+
+fn parse_input(input: Input) -> () {
+    todo!();
+}
+
+// -----------------------------------------------------------------------------
+// Solutions
+// -----------------------------------------------------------------------------
+
+fn solve_part1(_rename_me: ()) {
+    todo!();
+}
+
+fn solve_part2(_rename_me: ()) {
+    todo!();
+}
+
+// -----------------------------------------------------------------------------
+// Internals
+// -----------------------------------------------------------------------------
+
 EOF
+else
+    # Standard template with single solve function
+    cat > "$FULL_PATH/src/main.rs" <<'EOF'
+use input_reader::{Input, Outcome, read_input};
+
+fn main() {
+    let input = match read_input().expect("failed to read input") {
+        Outcome::Exit => return,
+        Outcome::Continue(input) => input,
+    };
+
+    let _rename_me = parse_input(input);
+
+    solve(_rename_me);
+}
+
+// -----------------------------------------------------------------------------
+// Input Parsing
+// -----------------------------------------------------------------------------
+
+fn parse_input(input: Input) -> () {
+    todo!();
+}
+
+// -----------------------------------------------------------------------------
+// Solutions
+// -----------------------------------------------------------------------------
+
+fn solve(_rename_me: ()) {
+    todo!();
+}
+
+// -----------------------------------------------------------------------------
+// Internals
+// -----------------------------------------------------------------------------
+
+EOF
+fi
 
 success "Created: $FULL_PATH/src/main.rs"
 
