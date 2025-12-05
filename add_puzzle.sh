@@ -88,10 +88,13 @@ fn main() {
         Outcome::Continue(input) => input,
     };
 
-    let _rename_me = parse_input(input);
+    let parsed = parse_input(input);
 
-    solve_part1(_rename_me.clone());
-    solve_part2(_rename_me);
+    let part1 = solve_part1(parsed.clone());
+    println!("Part 1 solution: {part1}");
+
+    let part2 = solve_part2(parsed);
+    println!("Part 2 solution: {part2}");
 }
 
 // -----------------------------------------------------------------------------
@@ -106,17 +109,67 @@ fn parse_input(input: Input) -> () {
 // Solutions
 // -----------------------------------------------------------------------------
 
-fn solve_part1(_rename_me: ()) {
+fn solve_part1(parsed: ()) -> () {
     todo!();
 }
 
-fn solve_part2(_rename_me: ()) {
+fn solve_part2(parsed: ()) -> () {
     todo!();
 }
 
 // -----------------------------------------------------------------------------
 // Internals
 // -----------------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------------
+// Tests
+// -----------------------------------------------------------------------------
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct TestData {
+        input: Input,
+        parsed: (),
+        part1: (),
+        part2: (),
+    }
+
+    fn get_test_data() -> Vec<TestData> {
+        vec![
+            // TestData {
+            //     input: Input::from("example"),
+            //     parsed: todo!(),
+            //     part1: todo!(),
+            //     part2: todo!(),
+            // },
+        ]
+    }
+
+    #[test]
+    fn test_parse_input() {
+        for data in get_test_data() {
+            assert_eq!(parse_input(data.input), data.parsed);
+        }
+    }
+
+    #[test]
+    fn test_solve_part1() {
+        for data in get_test_data() {
+            assert_eq!(solve_part1(data.parsed), data.part1);
+        }
+    }
+
+    #[test]
+    fn test_solve_part2() {
+        for data in get_test_data() {
+            assert_eq!(solve_part2(data.parsed), data.part2);
+        }
+    }
+}
 
 EOF
 else
@@ -130,9 +183,10 @@ fn main() {
         Outcome::Continue(input) => input,
     };
 
-    let _rename_me = parse_input(input);
+    let parsed = parse_input(input);
 
-    solve(_rename_me);
+    let solution = solve(parsed);
+    println!("Solution: {solution}");
 }
 
 // -----------------------------------------------------------------------------
@@ -147,13 +201,54 @@ fn parse_input(input: Input) -> () {
 // Solutions
 // -----------------------------------------------------------------------------
 
-fn solve(_rename_me: ()) {
+fn solve(parsed: ()) -> () {
     todo!();
 }
 
 // -----------------------------------------------------------------------------
 // Internals
 // -----------------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------------
+// Tests
+// -----------------------------------------------------------------------------
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    struct TestData {
+        input: Input,
+        parsed: (),
+        solution: (),
+    }
+
+    fn get_test_data() -> Vec<TestData> {
+        vec![
+            // TestData {
+            //     input: Input::from("example"),
+            //     parsed: todo!(),
+            //     solution: todo!(),
+            // },
+        ]
+    }
+
+    #[test]
+    fn test_parse_input() {
+        for data in get_test_data() {
+            assert_eq!(parse_input(data.input), data.parsed);
+        }
+    }
+
+    #[test]
+    fn test_solve() {
+        for data in get_test_data() {
+            assert_eq!(solve(data.parsed), data.solution);
+        }
+    }
+}
 
 EOF
 fi

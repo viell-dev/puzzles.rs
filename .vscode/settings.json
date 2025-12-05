@@ -43,12 +43,20 @@
   },
 
   // Words to add to workspace dictionary:
-  "cSpell.words": ["clippy", "Peekable", "viell"],
+  "cSpell.words": [
+    "analyser",
+    "clippy",
+    "Peekable",
+    "pico",
+    "println",
+    "viell"
+  ],
 
   // Words to ignore in spell-checking.
   "cSpell.ignoreWords": [
     "MSVC",
     "Swatinem",
+    "VecDeque",
     "dtolnay",
     "expl_impl_clone_on_copy",
     "linkedlist",

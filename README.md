@@ -36,3 +36,13 @@ If a puzzle names a concept explicitly (e.g., "sum the first n Fibonacci
 numbers"), that concept exists in the problem's vocabulary and can be used. But
 if it merely describes a pattern without naming it, the solution derives that
 pattern from first principles. **The process of solving is the puzzle.**
+
+## Advent of Code
+
+<details><summary>Show solved puzzle links</summary>
+
+### 2015
+
+1.  [Not Quite Lisp](puzzles/advent_of_code/2015/day01)
+
+</details>

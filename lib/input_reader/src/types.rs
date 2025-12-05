@@ -5,7 +5,9 @@
 use std::{
     env, error, fmt,
     fs::File,
-    io::{self, BufRead, BufReader},
+    io::{self, BufRead, BufReader, Seek},
+    string::ToString,
+    vec::Vec,
 };
 use utf8_chars::BufReadCharsExt;
 
@@ -133,6 +135,19 @@ pub enum Input {
 }
 
 impl Input {
+    /// Allows creating Memory variant Inputs for use in tests.
+    pub fn new(lines: Vec<String>) -> Self {
+        Input::Memory(lines)
+    }
+
+    /// Converts a vector of items into a vector of inputs.
+    pub fn from_each<T>(items: Vec<T>) -> Vec<Self>
+    where
+        Self: From<T>,
+    {
+        items.into_iter().map(Self::from).collect()
+    }
+
     /// Returns an iterator over the lines of input.
     pub fn lines(self) -> Box<dyn Iterator<Item = io::Result<String>>> {
         match self {
@@ -189,6 +204,59 @@ impl Input {
                 Box::new(joined.chars().map(Ok).collect::<Vec<_>>().into_iter())
             }
         }
+    }
+}
+
+impl Clone for Input {
+    fn clone(&self) -> Self {
+        match self {
+            Input::File(reader) => {
+                // Convert File -> Memory on clone to ensure independence.
+                // We use try_clone() to get a new file handle, then read all
+                // contents into memory. We can't return Input::File because
+                // cloned file descriptors share the file offset, which would
+                // cause one Input's reads to affect the other's position.
+                match reader.get_ref().try_clone() {
+                    Ok(mut file) => {
+                        let new_reader = BufReader::new(&file);
+                        let lines: Vec<String> = new_reader.lines().map_while(Result::ok).collect();
+
+                        // Rewind to the beginning so the original Input can still be used.
+                        // Since cloned file descriptors share the offset, seeking on the
+                        // clone also resets the original's position.
+                        let _ = file.rewind();
+
+                        Input::Memory(lines)
+                    }
+                    Err(_) => Input::Memory(vec![]),
+                }
+            }
+            Input::Memory(vec) => Input::Memory(vec.clone()),
+        }
+    }
+}
+
+impl From<&str> for Input {
+    fn from(line: &str) -> Self {
+        Input::new(vec![line.to_string()])
+    }
+}
+
+impl From<String> for Input {
+    fn from(line: String) -> Self {
+        Input::new(vec![line])
+    }
+}
+
+impl From<Vec<&str>> for Input {
+    fn from(lines: Vec<&str>) -> Self {
+        Input::new(lines.into_iter().map(ToString::to_string).collect())
+    }
+}
+
+impl From<Vec<String>> for Input {
+    fn from(lines: Vec<String>) -> Self {
+        Input::new(lines)
     }
 }
 
@@ -306,5 +374,40 @@ mod tests {
         let input = Input::Memory(vec!["test".to_string()]);
         let outcome = Outcome::from(input);
         assert!(matches!(outcome, Outcome::Continue(_)));
+    }
+
+    // Clone tests
+
+    #[test]
+    fn input_memory_clone() {
+        let input = Input::Memory(vec!["line1".to_string(), "line2".to_string()]);
+        let cloned = input.clone();
+
+        // Both should be Memory variants
+        assert!(matches!(cloned, Input::Memory(_)));
+
+        // Verify content is the same
+        let lines: Vec<String> = cloned.lines().map(|r| r.unwrap()).collect();
+        assert_eq!(lines, vec!["line1", "line2"]);
+    }
+
+    #[test]
+    fn input_file_clone_works() {
+        let mut temp_file = NamedTempFile::new().unwrap();
+        writeln!(temp_file, "line 1").unwrap();
+        writeln!(temp_file, "line 2").unwrap();
+
+        let file = std::fs::File::open(temp_file.path()).unwrap();
+        let reader = BufReader::new(file);
+        let input = Input::File(reader);
+
+        let cloned = input.clone();
+
+        // Both original and clone should work independently
+        let original_lines: Vec<String> = input.lines().map(|r| r.unwrap()).collect();
+        let cloned_lines: Vec<String> = cloned.lines().map(|r| r.unwrap()).collect();
+
+        assert_eq!(original_lines, vec!["line 1", "line 2"]);
+        assert_eq!(cloned_lines, vec!["line 1", "line 2"]);
     }
 }
